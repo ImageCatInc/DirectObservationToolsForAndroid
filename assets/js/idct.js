@@ -253,7 +253,7 @@ function init(){
 		 function updateScreenDetails() {
 			var a = document.getElementById("mapCenterCoords");
 			var ll = map.getCenter().transform(map.getProjectionObject(),new OpenLayers.Projection("EPSG:4326"));
-			a.innerHTML = "Lat: " + Math.round(ll.lat*1000)/1000  + " , lon:" + Math.round(ll.lon*1000)/1000 + " Zoom: " + map.getZoom();
+			a.innerHTML = "Lat: " + Math.round(ll.lat*1000000)/1000000  + " , lon:" + Math.round(ll.lon*1000000)/1000000 + " Zoom: " + map.getZoom();
 		         	
 		 }
 	}	 
