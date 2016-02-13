@@ -302,7 +302,12 @@ public class GemDbAdapter
 					//Write the first record in the cursor as .writeNext will end up skipping a record
 					String[] arrStr = new String[curCSV.getColumnCount()];
 					for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
-						arrStr[i] = curCSV.getString(i);
+						// The getSring method doesn't properly handle doubles. See: https://code.google.com/p/android/issues/detail?id=22219
+						if (curCSV.getColumnName(i).equals("X") || curCSV.getColumnName(i).equals("Y")) {
+							arrStr[i] = String.valueOf(curCSV.getDouble(i));
+						} else {
+							arrStr[i] = curCSV.getString(i);
+						}
 					}
 					csvWrite.writeNext(arrStr);
 
