@@ -312,19 +312,22 @@ public class GemDbAdapter
 					csvWrite.writeNext(arrStr);
 
 					//Now loop over the rest of the cursor
-					curCSV.moveToFirst();	
+					curCSV.moveToFirst();
 					while(curCSV.moveToNext())
 					{
-
 						String[] arrStr2 = new String[curCSV.getColumnCount()];
 						for (int i = 0; i < curCSV.getColumnCount(); i = i + 1) {
-							arrStr2[i] = curCSV.getString(i);
+							// The getSring method doesn't properly handle doubles. See: https://code.google.com/p/android/issues/detail?id=22219
+							if (curCSV.getColumnName(i).equals("X") || curCSV.getColumnName(i).equals("Y")) {
+								arrStr2[i] = String.valueOf(curCSV.getDouble(i));
+							} else {
+								arrStr2[i] = curCSV.getString(i);
+							}
 						}
 						csvWrite.writeNext(arrStr2);
 						Log.d("IDCT","IDCT DB Export" + Arrays.toString(arrStr2));
 					}
 				}
-
 			}
 			csvWrite.close();
 			curCSV.close();
